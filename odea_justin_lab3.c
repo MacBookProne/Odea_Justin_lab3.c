@@ -1,54 +1,73 @@
 #include <stdio.h>
 #include <math.h>
-#include <stdbool.h>
 
-enum Menu_t{ //enums are easy now that i understand them.
+# define PI 3.14159
+# define loop_limit 90
+
+bool done = false;
+unsigned input;
+
+enum menu_t {
     Sine, Cosine, Tangent, QUIT
 };
 
-const float PI = 3.14159; // constant that has PI   also a float so it has decimals
-const int  loop_limit = 90; // loop limit of 90
+void list(void) // Prints menu 
+{
+    printf("Please choose an option: (0) Sine (1) Cosine (2) Tangent (3) QUIT\n");
+    printf("Enter your choice: ");
 
+} // end menu method
 
-
-
-
-int main() { // main method
-
-    bool done = false; //boolean comapring true and false
+int tally(int) // tallys sin, cos, tan, and terminates after three is choosen. 
+{
     while (!done) {
-        printf("Please choose an option: (0) Sine (1) Cosine (2) Tangent (3) QUIT\n"); //print statement to choose opt
-        printf("Enter your choice > "); //enter your choice printf
-        unsigned input;
-        scanf("%u", &input);   //gives all the postive #'s to 4 billion
+        scanf("%u", &input);
         switch (input) {
-            case Sine: // case 1
-                for(int i =0; i <= loop_limit; i=i + 15){
-                    printf("\tsin(%d) = %4f\n", i , sin(PI*i/180.0f));
+            case Sine:
+
+                for (int i = 0; i <= loop_limit; i = i + 15) {
+                    printf("\tsin(%d) = %2f\n", i, sin(PI * i / 180.0f)); // calculates sin 
                 }
-                break; //breaks here
-            case Cosine: //case 2
-                for(int i =0; i <= loop_limit; i=i + 15) {
-                    printf("\tcos(%d) = %4f\n", i, cos(PI * i / 180.0f)); //this took some serious brain power
+                menu();
+                break;
+            case Cosine:
+
+                for (int i = 0; i <= loop_limit; i = i + 15) {
+                    printf("\tcos(%d) = %2f\n", i, cos(PI * i / 180.0f)); // calculates cos 
                 }
-                break; //breaks here
+                menu();
+                break;
             case Tangent:
-                for(int i =0; i <= loop_limit; i=i + 15) {
-                    if(i==90)
-                        printf("\ttan(90) is UNDEFINED\n");  //90 is undefined because it is huge
+
+                for (int i = 0; i <= loop_limit; i = i + 15) {
+                    if (i == 90)
+                        printf("\ttan(90) is UNDEFINED\n");
                     else
-                        printf("\ttan(%d) = %4f\n", i, tan(PI * i / 180.0f)); //tan is computed
+                        printf("\ttan(%d) = %2f\n", i,
+                               tan(PI * i / 180.0f)); // calculates tan
                 }
-                break; //breaks again
+                menu();
+                break;
             case QUIT:
                 done = true;
-                printf("You chose QUIT. Thank you, come again!\n"); //print that you have quit
-                break; //breaks again
+                printf("You chose QUIT. Thank you, come again!\n"); // quits and terminates 
+                break;
             default:
-                printf("%d is an invalid option. Please try again.\n", input);  //print is invlaid
-        }
-    }
+                printf("%d is an invalid option. Please try again.\n",
+                       input); // invalid option method 
 
-        return 0;
-    }
+        } // end switch
+    } // end while
+} // end calculate method
 
+
+int main()  // main method 
+{
+menu(); // Prints main menu.
+while (!done)
+{
+tally(input); // Calculates and prints sin, cos, tan, and quit.
+} // end while
+
+return 0;
+} // end main
